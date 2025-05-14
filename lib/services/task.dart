@@ -4,9 +4,12 @@ import 'package:saboor_project/models/task.dart';
 class TaskServices {
   ///Create Task
   Future createTask(TaskModel model) async {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('taskCollection').doc();
     return await FirebaseFirestore.instance
         .collection('taskCollection')
-        .add(model.toJson());
+        .doc(documentReference.id)
+        .set(model.toJson(documentReference.id));
   }
 
   ///Get All Tasks
@@ -42,7 +45,6 @@ class TaskServices {
   }
 
   ///Get Task By Category
-
 
   ///Update Task
   Future updateTask(TaskModel model) async {
